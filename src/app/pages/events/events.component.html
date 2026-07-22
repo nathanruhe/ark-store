@@ -1,0 +1,264 @@
+<section class="events-page">
+
+  <div class="container">
+
+    <!-- HERO -->
+    <section
+      class="hero reveal"
+      *ngIf="featured as current"
+      [class.hero-changing]="featuredTransitioning"
+      (mouseenter)="pauseFeaturedSlider()"
+      (mouseleave)="resumeFeaturedSlider()"
+      (touchstart)="onHeroTouchStart($event)"
+      (touchend)="onHeroTouchEnd($event)"
+    >
+
+      <img class="hero-bg" [src]="current.image" [alt]="current.title" />
+
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+
+        <span class="tag">Evento Destacado</span>
+
+        <h1>{{ current.title }}</h1>
+
+        <p>{{ current.description }}</p>
+
+        <!-- DESKTOP -->
+        <div class="hero-meta">
+          <span>{{ formatDate(current.startDate) }}</span>
+          <span>→</span>
+          <span>{{ formatDate(current.endDate) }}</span>
+
+          <span class="code" *ngIf="current.code">
+            Código: {{ current.code }}
+          </span>
+        </div>
+
+        <!-- MOBILE -->
+        <div class="hero-mobile-info" *ngIf="featuredEvents.length > 0">
+
+          <span class="hero-mobile-code" *ngIf="current.code">
+            Código: {{ current.code }}
+          </span>
+
+          <button
+            *ngIf="current.ctaLink && current.ctaLabel"
+            class="hero-cta"
+            type="button"
+            (click)="goToLink(current.ctaLink)"
+          >
+            {{ current.ctaLabel }}
+          </button>
+
+          <div class="hero-mobile-dates">
+            <span>{{ formatDate(current.startDate) }}</span>
+            <span>→</span>
+            <span>{{ formatDate(current.endDate) }}</span>
+          </div>
+
+        </div>
+
+        <button
+          *ngIf="current.ctaLink && current.ctaLabel"
+          class="hero-cta hero-cta-desktop"
+          type="button"
+          (click)="goToLink(current.ctaLink)"
+        >
+          {{ current.ctaLabel }}
+        </button>
+
+      </div>
+
+      <button
+        *ngIf="featuredEvents.length > 1"
+        class="hero-nav prev"
+        type="button"
+        (click)="prevFeatured()"
+      >‹</button>
+
+      <button
+        *ngIf="featuredEvents.length > 1"
+        class="hero-nav next"
+        type="button"
+        (click)="nextFeatured(true)"
+      >›</button>
+
+      <div class="hero-dots" *ngIf="featuredEvents.length > 1">
+        <span
+          *ngFor="let e of featuredEvents; let i = index"
+          (click)="setFeaturedIndex(i); restartFeaturedSlider()"
+          [class.active]="i === featuredIndex"
+        ></span>
+      </div>
+
+    </section>
+
+    <!-- EVENTOS -->
+    <section class="events-section reveal">
+
+      <div class="section-head">
+        <h2>Eventos</h2>
+        <p>Activos, próximos y finalizados</p>
+      </div>
+
+      <div class="sub-section">
+        <h3 class="sub-title">Activos</h3>
+
+        <div class="events-grid">
+
+          <div class="event-card" *ngFor="let event of activeEvents">
+
+            <div class="event-image-wrapper">
+
+              <img
+                class="event-image"
+                [src]="event.image"
+                [alt]="event.title"
+              />
+
+              <span class="event-code" *ngIf="event.code">
+                Código: {{ event.code }}
+              </span>
+
+            </div>
+
+            <div class="event-info">
+
+              <span class="event-type">{{ event.type }}</span>
+
+              <h3>{{ event.title }}</h3>
+
+              <p>{{ event.description }}</p>
+
+              <div class="event-actions">
+
+                <button
+                  *ngIf="event.ctaLink && event.ctaLabel"
+                  class="event-btn"
+                  type="button"
+                  (click)="goToLink(event.ctaLink)"
+                >
+                  {{ event.ctaLabel }}
+                </button>
+
+                <small class="event-date">
+                  {{ formatDate(event.startDate) }} → {{ formatDate(event.endDate) }}
+                </small>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PRÓXIMOS -->
+      <div class="sub-section">
+
+        <h3 class="sub-title">Próximamente</h3>
+
+        <div class="timeline">
+
+          <div class="timeline-item" *ngFor="let event of upcomingEvents">
+
+            <div class="timeline-image">
+              <img [src]="event.image" [alt]="event.title" />
+            </div>
+
+            <div class="timeline-content">
+              <div class="timeline-date">
+                {{ formatDate(event.startDate) }}
+              </div>
+              <h3>{{ event.title }}</h3>
+              <p>{{ event.description }}</p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- FINALIZADOS -->
+      <div class="sub-section">
+
+        <h3 class="sub-title">Finalizados</h3>
+
+        <div class="mini-grid">
+
+          <div class="mini-card" *ngFor="let event of finishedEvents">
+
+            <img [src]="event.image" [alt]="event.title" />
+
+            <div class="mini-info">
+              <span>{{ event.type }}</span>
+              <h3>{{ event.title }}</h3>
+              <small>{{ formatDate(event.startDate) }}</small>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <hr class="divider">
+
+    <!-- ANUNCIOS -->
+    <section class="announcements reveal">
+
+      <div class="section-head">
+        <h2>Anuncios</h2>
+        <p>Noticias y comunicados de ARK</p>
+      </div>
+
+      <div class="announcement-grid">
+
+        <div class="announcement-card" *ngFor="let item of announcements">
+
+          <span>{{ formatDate(item.date) }}</span>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <hr class="divider">
+
+    <!-- GANADORES -->
+    <section class="winners reveal">
+
+      <div class="section-head">
+        <h2>Ganadores</h2>
+        <p>Últimos ganadores de eventos y sorteos</p>
+      </div>
+
+      <div class="winner-grid">
+
+        <div class="winner-card" *ngFor="let winner of winners">
+
+          <img [src]="winner.image" [alt]="winner.username" />
+
+          <div class="winner-info">
+            <h3>{{ winner.username }}</h3>
+            <p>{{ winner.prize }}</p>
+            <span>{{ formatDate(winner.date) }}</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</section>

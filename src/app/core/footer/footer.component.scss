@@ -1,0 +1,339 @@
+.footer {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(255,255,255,0.05),
+      transparent 45%
+    ),
+    linear-gradient(
+      to bottom,
+      #050505,
+      #000
+    );
+
+  color: white;
+  padding: 90px 40px 34px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* =========================
+   TOP GLOW
+========================= */
+
+.footer::before {
+  content: '';
+
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 300px;
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.1),
+      transparent 70%
+    );
+
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+/* =========================
+   INNER
+========================= */
+
+.footer-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 80px;
+  align-items: start;
+}
+
+/* =========================
+   BRAND
+========================= */
+
+.brand a {
+  text-decoration: none;
+  color: white;
+}
+
+.brand h3 {
+  margin: 0 0 14px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 10px;
+}
+
+.brand p {
+  max-width: 240px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.58);
+}
+
+/* =========================
+   LINKS AREA
+========================= */
+
+.context {
+  display: flex;
+  gap: 80px;
+}
+
+.links,
+.legal {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* TITLES */
+
+.links::before {
+  content: 'Navigation';
+  margin-bottom: 10px;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+.legal::before {
+  content: 'Legal';
+  margin-bottom: 10px;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+/* LINKS */
+
+.footer-inner a {
+  position: relative;
+  width: fit-content;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 1px;
+  transition:
+    color 0.35s ease,
+    transform 0.35s ease,
+    opacity 0.35s ease;
+}
+
+/* UNDERLINE */
+
+.footer-inner a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 1px;
+  background: white;
+  transition: width 0.35s ease;
+}
+
+.footer-inner a:not(.instagram-link):hover {
+  transform: translateX(4px);
+}
+
+/* =========================
+   SOCIAL
+========================= */
+
+.social {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.social p {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+
+/* INSTAGRAM SIMPLE */
+.instagram-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  background: transparent;
+  backdrop-filter: none;
+  padding: 0;
+  border: none;
+  transition: none;
+}
+
+.instagram-link img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
+}
+
+/* =========================
+   BOTTOM
+========================= */
+
+.bottom {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 40px auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.bottom span {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.42);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1024px) {
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .context {
+    gap: 60px;
+  }
+
+  .social {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .footer {
+    padding: 60px 20px 30px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+  }
+
+  /* =========================
+     BRAND
+  ========================= */
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* LINK ARK */
+  .brand a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .brand h3 {
+    text-align: center;
+  }
+
+  .brand p {
+    text-align: center;
+  }
+
+  /* =========================
+     NAVIGATION + LEGAL
+  ========================= */
+
+  .context {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    gap: 50px;
+  }
+
+  .links,
+  .legal {
+    width: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    text-align: center;
+  }
+
+  /* =========================
+     SOCIAL
+  ========================= */
+
+  .social {
+    align-items: center;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .instagram-link {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-top: -15px;
+  }
+
+  .instagram-link img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* =========================
+     BOTTOM
+  ========================= */
+
+  .bottom {
+    margin-top: 40px;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+}

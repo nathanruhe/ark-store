@@ -1,0 +1,310 @@
+<section class="layout">
+  <section class="container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- MOBILE FILTER BUTTON -->
+      <div class="mobile-filter-bar">
+        <button
+          class="mobile-filter-title"
+          (click)="toggleMobileFilters()"
+        >
+          <span>
+            Filtros
+          </span>
+          <span>
+            {{ mobileFiltersOpen ? '−' : '+' }}
+          </span>
+        </button>
+
+        <button
+          class="mobile-reset"
+          (click)="resetFilters()"
+        >
+          Reset
+        </button>
+      </div>
+
+      <!-- FILTER CONTENT -->
+      <div
+        class="filters-content"
+        [class.open]="mobileFiltersOpen"
+      >
+
+        <!-- DESKTOP ONLY -->
+        <div class="desktop-title">
+          <h2 class="title">
+            Filtros
+          </h2>
+        </div>
+
+        <!-- SEARCH -->
+        <div class="filter-block">
+          <input
+            type="text"
+            class="filter-search"
+            placeholder="Buscar productos..."
+            [(ngModel)]="searchText"
+            (input)="onChange()"
+          />
+        </div>
+
+        <!-- CATEGORY -->
+        <div
+          class="filter-block"
+          [class.open]="open.category"
+        >
+          <button
+            class="filter-title"
+            (click)="toggle('category')"
+          >
+            Categorias
+          </button>
+
+          <div
+            class="content"
+            *ngIf="open.category"
+          >
+            <div class="chips">
+              <button
+                *ngFor="let c of categories"
+                class="chip"
+                [class.active]="selectedCategory === c"
+                (click)="selectCategory(c)"
+              >
+                {{ c === 'all' ? 'Todas' : c }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACCESSORY SUBCATEGORY -->
+        <div
+          class="filter-block"
+          *ngIf="selectedCategory === 'accesorios'"
+          [class.open]="open.accessory"
+        >
+          <button
+            class="filter-title"
+            (click)="toggle('accessory')"
+          >
+            Subcategoría
+          </button>
+
+          <div
+            class="content"
+            *ngIf="open.accessory"
+          >
+            <div class="chips">
+              <button
+                *ngFor="let type of accessoryTypes"
+                class="chip"
+                [class.active]="selectedAccessoryType === type"
+                (click)="selectAccessoryType(type)"
+              >
+                {{ type === 'all' ? 'Todas' : type }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- BRAND -->
+        <div
+          class="filter-block"
+          [class.open]="open.brand"
+        >
+          <button
+            class="filter-title"
+            (click)="toggle('brand')"
+          >
+            Marcas
+          </button>
+
+          <div
+            class="content"
+            *ngIf="open.brand"
+          >
+            <div class="chips">
+              <button
+                *ngFor="let b of brands"
+                class="chip"
+                [class.active]="selectedBrand === b"
+                (click)="selectBrand(b)"
+              >
+                {{ b === 'all' ? 'Todas' : b }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- GENDER -->
+        <div
+          class="filter-block"
+          [class.open]="open.gender"
+        >
+          <button
+            class="filter-title"
+            (click)="toggle('gender')"
+          >
+            Género
+          </button>
+
+          <div
+            class="content"
+            *ngIf="open.gender"
+          >
+            <div class="chips">
+              <button
+                class="chip"
+                [class.active]="selectedGender === 'all'"
+                (click)="selectGender('all')"
+              >
+                Todos
+              </button>
+
+              <button
+                class="chip"
+                [class.active]="selectedGender === 'men'"
+                (click)="selectGender('men')"
+              >
+                Hombre
+              </button>
+
+              <button
+                class="chip"
+                [class.active]="selectedGender === 'women'"
+                (click)="selectGender('women')"
+              >
+                Mujer
+              </button>
+
+              <button
+                class="chip"
+                [class.active]="selectedGender === 'kids'"
+                (click)="selectGender('kids')"
+              >
+                Niños
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- SORT -->
+        <div
+          class="filter-block"
+          [class.open]="open.sort"
+        >
+          <button
+            class="filter-title"
+            (click)="toggle('sort')"
+          >
+            Ordenar
+          </button>
+
+          <div
+            class="content"
+            *ngIf="open.sort"
+          >
+            <div class="chips">
+              <button
+                class="chip"
+                [class.active]="sortBy === 'default'"
+                (click)="setSort('default')"
+              >
+                Por defecto
+              </button>
+
+              <button
+                class="chip"
+                [class.active]="sortBy === 'priceLow'"
+                (click)="setSort('priceLow')"
+              >
+                Precio ↑
+              </button>
+
+              <button
+                class="chip"
+                [class.active]="sortBy === 'priceHigh'"
+                (click)="setSort('priceHigh')"
+              >
+                Precio ↓
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- PRODUCTS -->
+    <main class="products">
+      <div class="topbar">
+        <p>
+          {{ filteredProducts.length }} products
+        </p>
+      </div>
+
+      <!-- <div class="grid"> -->
+      <div class="grid">
+        <div
+          class="card reveal"
+          *ngFor="let product of filteredProducts"
+          (click)="goToDetail(product.ref)"
+        >
+          <div class="image-wrapper">
+            <div
+              class="skeleton"
+              *ngIf="!product.loaded"
+            ></div>
+
+            <img
+              class="main-image"
+              [src]="product.gallery[0]"
+              [alt]="product.name"
+              loading="lazy"
+              (load)="product.loaded = true"
+              [class.loaded]="product.loaded"
+            />
+
+            <img
+              *ngIf="product.hoverImage"
+              class="hover-image"
+              [src]="product.hoverImage"
+              [alt]="product.name"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="info">
+            <div class="top-meta">
+              <p class="brand">
+                {{ product.brand }}
+              </p>
+
+              <span class="product-ref">
+                REF: {{ product.ref }}
+              </span>
+            </div>
+
+            <h3>
+              {{ product.name }}
+            </h3>
+
+            <div class="price-row">
+              <span class="retail-price">
+                {{ product.retailPrice }}€
+              </span>
+
+              <span class="sale-price">
+                {{ product.price }}€
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </section>
+</section>

@@ -1,0 +1,93 @@
+<section class="contact" [class.reveal]="reveal">
+
+  <!-- PARALLAX BACKGROUND -->
+  <div class="bg-text">CONTACTO</div>
+
+  <!-- CONTAINER PRINCIPAL -->
+  <div class="contact-container">
+
+    <!-- LEFT -->
+    <div class="left">
+
+      <h1>
+        Estamos aquí para<br />
+        <span>ayudarte</span>
+      </h1>
+
+      <p>
+        Contacta con ARK para resolver dudas sobre nuestros productos, drops, eventos,
+        disponibilidad o cualquier consulta relacionada con la tienda y la comunidad.
+      </p>
+
+      <div class="meta">
+        <div class="meta-item">
+          <span>Email</span>
+          arkshopbrands@gmail.com
+        </div>
+
+        <div class="meta-item">
+          <span>Instagram</span>
+          @a.r.k.shop
+        </div>
+
+        <div class="meta-item">
+          <span>Tiempo de respuesta</span>
+          24–48 horas
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+
+      <form [formGroup]="form" (ngSubmit)="send()" class="form">
+
+        <div class="field">
+          <input type="text" formControlName="name" placeholder="Nombre y apellidos" />
+          <div class="line"></div>
+          <small *ngIf="f.name.touched && f.name.invalid">
+            Mínimo 3 caracteres
+          </small>
+        </div>
+
+        <div class="field">
+          <input type="email" formControlName="email" placeholder="Correo electrónico" />
+          <div class="line"></div>
+          <small *ngIf="f.email.touched && f.email.invalid">
+            Email inválido
+          </small>
+        </div>
+
+        <div class="field">
+          <textarea rows="6" formControlName="message" placeholder="Mensaje"></textarea>
+          <div class="line"></div>
+          <small *ngIf="f.message.touched && f.message.invalid">
+            Mínimo 10 caracteres
+          </small>
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="loading || cooldown"
+          [class.loading]="loading"
+        >
+          <span *ngIf="!loading">Enviar mensaje</span>
+          <span *ngIf="loading">Enviando...</span>
+        </button>
+
+        <div class="success" *ngIf="success">
+          Mensaje enviado ✓
+        </div>
+
+        <div class="cooldown" *ngIf="cooldown && !success">
+          Por favor espera antes de enviar otro mensaje
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>

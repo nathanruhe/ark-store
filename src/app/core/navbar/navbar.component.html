@@ -1,0 +1,70 @@
+<nav class="navbar">
+  <div class="navbar-inner">
+
+    <!-- LOGO -->
+    <div class="logo">
+      <a routerLink="/">ARK</a>
+    </div>
+
+    <!-- DESKTOP MENU -->
+    <ul class="desktop-links">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/drops">Drops</a></li>
+      <li><a routerLink="/products">Products</a></li>
+      <li><a routerLink="/events">Events</a></li>
+      <li><a routerLink="/contact">Contact</a></li>
+      <li><a routerLink="/about">About</a></li>
+    </ul>
+
+    <!-- HAMBURGER -->
+    <button
+      *ngIf="isMobile"
+      class="hamburger"
+      type="button"
+      (click)="toggleMenu($event)"
+      aria-label="Abrir menú"
+      [attr.aria-expanded]="isMenuOpen"
+    >
+      <span [class.open]="isMenuOpen"></span>
+      <span [class.open]="isMenuOpen"></span>
+      <span [class.open]="isMenuOpen"></span>
+    </button>
+
+  </div>
+
+  <!-- OVERLAY -->
+  <div
+    *ngIf="isMobile && isMenuOpen"
+    class="overlay"
+    (click)="closeMenu()"
+  ></div>
+
+  <!-- MOBILE MENU -->
+  <ul *ngIf="isMobile && isMenuOpen" class="mobile-links">
+    <li><a routerLink="/" (click)="closeMenu()">Home</a></li>
+    <li><a routerLink="/drops" (click)="closeMenu()">Drops</a></li>
+    <li><a routerLink="/products" (click)="closeMenu()">Products</a></li>
+    <li><a routerLink="/events" (click)="closeMenu()">Events</a></li>
+    <li><a routerLink="/contact" (click)="closeMenu()">Contact</a></li>
+    <li><a routerLink="/about" (click)="closeMenu()">About</a></li>
+
+    <li class="divider"></li>
+
+    <li class="social">
+      <p>Sigue el movimiento</p>
+
+      <a
+        href="https://instagram.com/a.r.k.shop"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="instagram-link"
+        aria-label="Instagram"
+      >
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+          alt="Instagram"
+        />
+      </a>
+    </li>
+  </ul>
+</nav>

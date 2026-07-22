@@ -1,0 +1,55 @@
+<section class="error-page">
+
+  <!-- BACKGROUND ORBS -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <!-- PARTICLES -->
+  <div
+    class="particle"
+    *ngFor="let item of particles; let i = index"
+    [style.--i]="i"
+  ></div>
+
+  <!-- BIG BACKGROUND 404 -->
+  <div class="code-ghost" aria-hidden="true">
+    404
+  </div>
+
+  <section class="container">
+
+    <div class="content">
+
+      <span class="label">ERROR 404</span>
+
+      <h1>Página no encontrada</h1>
+
+      <p>
+        La ruta que intentas visitar no existe, ha sido eliminada o ya no está disponible.
+      </p>
+
+      <div class="actions">
+
+        <a routerLink="/" class="btn primary">
+          Volver al inicio
+        </a>
+
+        <a routerLink="/products" class="btn secondary">
+          Ver colección
+        </a>
+
+        <a routerLink="/contact" class="btn tertiary">
+          Contacto
+        </a>
+
+      </div>
+
+      <div class="meta">
+        <span>ARK - Streetwear & selected brands</span>
+      </div>
+
+    </div>
+
+  </section>
+
+</section>

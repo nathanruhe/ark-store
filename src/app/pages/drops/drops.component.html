@@ -1,0 +1,147 @@
+<section class="drops-page">
+
+  <section class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+
+      <div class="hero-bg">
+        <div class="overlay"></div>
+      </div>
+
+      <div class="hero-content reveal">
+
+        <h1>Drops exclusivos</h1>
+
+        <p>
+          Ediciones limitadas de prendas exclusivas lanzadas de forma puntual.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- INFO -->
+    <section class="info reveal">
+
+      <div class="info-header">
+        <h2>Cómo funcionan los drops</h2>
+        <p>
+          Cada drop se lanza de forma controlada con selección previa de piezas.
+          La disponibilidad depende del momento de publicación y del stock asignado a cada lanzamiento.
+        </p>
+      </div>
+
+      <div class="info-grid">
+
+        <div class="info-card">
+          <span>01</span>
+          <h3>Explora la colección</h3>
+          <p>
+            Descubre prendas exclusivas que aparecen de forma puntual en cada drop según disponibilidad.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <span>02</span>
+          <h3>Contacto directo</h3>
+          <p>
+            Los pedidos se gestionan manualmente a través de Instagram o WhatsApp. <br>
+            No olvides apuntar la REF!
+          </p>
+        </div>
+
+        <div class="info-card">
+          <span>03</span>
+          <h3>Disponibilidad limitada</h3>
+          <p>
+            Cuando se agotan las unidades o finaliza la fecha del drop,
+            el producto desaparece definitivamente.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="products reveal">
+
+      <div class="section-header">
+
+        <div>
+
+          <h2 *ngIf="drops.length > 0; else empty">
+            {{ drops.length }} Drops Disponibles
+          </h2>
+
+          <ng-template #empty>
+            <p>No hay drops activos en este momento</p>
+          </ng-template>
+
+        </div>
+
+      </div>
+
+      <div class="grid">
+
+        <article class="card" *ngFor="let drop of drops">
+
+          <div class="image-wrapper">
+
+            <img
+              [src]="getCurrentImage(drop)"
+              [alt]="drop.name"
+            >
+
+            <button class="nav left" (click)="prevImage(drop, $event)">
+              ‹
+            </button>
+
+            <button class="nav right" (click)="nextImage(drop, $event)">
+              ›
+            </button>
+
+          </div>
+
+          <div class="info-content">
+
+            <div class="top-row">
+
+              <span class="brand">
+                {{ drop.brand }}
+              </span>
+
+              <span class="ref">REF: {{ drop.ref }}</span>
+
+            </div>
+
+            <h3>{{ drop.name }}</h3>
+
+            <p class="description">
+              {{ drop.description }}
+            </p>
+
+            <div class="bottom-row">
+
+              <div class="prices">
+                <span class="price">
+                  {{ drop.price }}€
+                </span>
+              </div>
+
+              <div class="remaining">
+                Finaliza en <span class="end">{{ getRemainingDays(drop.endDate) }}</span> días
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </section>
+</section>

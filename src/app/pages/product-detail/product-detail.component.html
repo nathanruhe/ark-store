@@ -1,0 +1,159 @@
+<section class="product-detail">
+  <section class="container">
+    <section class="product-page" *ngIf="product as p">
+
+      <div class="product-layout">
+
+        <!-- STORIES / GALLERY -->
+        <div
+          class="stories"
+          (touchstart)="onTouchStart($event)"
+          (touchend)="onTouchEnd($event)"
+          (mousedown)="onMouseDown($event)"
+          (mouseup)="onMouseUp($event)"
+          (mouseleave)="onMouseUp($event)"
+        >
+
+          <!-- PROGRESS -->
+          <div class="progress" *ngIf="p.gallery.length > 1">
+            <div
+              class="bar"
+              *ngFor="let img of p.gallery; let i = index; trackBy: trackByIndex"
+            >
+              <div
+                class="fill"
+                [class.completed]="i < currentIndex"
+                [class.active]="i === currentIndex"
+              ></div>
+            </div>
+          </div>
+
+          <!-- VIEWER -->
+          <div class="viewer">
+
+            <div class="viewer-stage">
+              <div
+                class="viewer-bg"
+                [style.backgroundImage]="'url(' + currentImage + ')'"
+              ></div>
+
+              <img
+                [src]="currentImage"
+                [alt]="p.name"
+                (click)="openZoom()"
+              />
+
+              <div class="viewer-overlay"></div>
+            </div>
+
+            <button class="nav prev" type="button" aria-label="Imagen anterior" (click)="prev()"></button>
+            <button class="nav next" type="button" aria-label="Siguiente imagen" (click)="next()"></button>
+
+          </div>
+
+        </div>
+
+        <!-- INFO -->
+        <aside class="info">
+
+          <span class="brand">
+            {{ p.brand }}
+          </span>
+
+          <div class="meta-row">
+            <span class="meta-pill">{{ p.category }}</span>
+            <span class="meta-pill">{{ p.gender }}</span>
+          </div>
+
+          <h1>
+            {{ p.name }}
+          </h1>
+
+          <div class="price-row">
+
+            <div class="price-left">
+
+              <span *ngIf="p.retailPrice" class="retail-price">
+                {{ p.retailPrice }}€
+              </span>
+
+              <span class="price">
+                {{ p.price }}€
+              </span>
+
+            </div>
+
+            <span class="product-ref">
+              REF: {{ p.ref }}
+            </span>
+
+          </div>
+
+          Descripción:
+          <p class="desc">
+            {{ p.description }}
+          </p>
+
+          <div class="cta-row">
+
+            <button
+              class="cta primary"
+              type="button"
+              (click)="openInstagramDM()"
+            >
+              DM Instagram
+            </button>
+
+            <a class="cta secondary" routerLink="/products">
+              Volver
+            </a>
+
+          </div>
+
+          <p class="note">
+            Haz tu pedido en un click!<br> La referencia quedará copiada lista para pegar.
+          </p>
+        </aside>
+
+      </div>
+
+      <!-- RELATED -->
+      <section class="related" *ngIf="relatedProducts.length">
+
+        <div class="related-head">
+          <h2>También te puede interesar</h2>
+        </div>
+
+        <div class="grid">
+
+          <div
+            class="card"
+            *ngFor="let item of relatedProducts"
+            (click)="goToProduct(item.ref)"
+          >
+
+            <img [src]="item.gallery[0]" [alt]="item.name" />
+
+            <div class="meta">
+              <p>{{ item.brand }}</p>
+              <span>{{ item.name }}</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ZOOM -->
+      <div
+        class="zoom"
+        *ngIf="zoomOpen"
+        (click)="closeZoom()"
+      >
+        <img [src]="currentImage" class="zoom-img" [alt]="p.name" />
+      </div>
+
+    </section>
+  </section>
+</section>

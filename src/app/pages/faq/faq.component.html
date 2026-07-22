@@ -1,0 +1,43 @@
+<section class="faq-page">
+  <div class="faq-container">
+
+    <div class="faq-header">
+      <h1>Preguntas frecuentes</h1>
+
+      <p class="intro">
+        Encuentra respuestas rápidas sobre pedidos, envíos, autenticidad y contacto.
+      </p>
+    </div>
+
+    <div class="faq-list">
+
+      <article
+        class="faq-item"
+        *ngFor="let faq of faqs; let i = index"
+        [class.active]="activeIndex === i"
+      >
+
+        <button
+          class="faq-question"
+          type="button"
+          (click)="toggleFaq(i)"
+        >
+
+          <span>{{ faq.question }}</span>
+
+          <span class="icon">
+            {{ activeIndex === i ? '−' : '+' }}
+          </span>
+
+        </button>
+
+        <div class="faq-answer">
+          <p>{{ faq.answer }}</p>
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+</section>

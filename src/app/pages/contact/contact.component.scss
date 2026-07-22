@@ -1,0 +1,203 @@
+.contact {
+  position: relative;
+  width: 100%;
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+}
+
+/* =========================
+   CONTAINER (CLAVE)
+========================= */
+
+.contact-container {
+  width: 100%;
+  max-width: 1400px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================
+   BACKGROUND TEXT
+========================= */
+
+.bg-text {
+  position: absolute;
+  font-size: 18vw;
+  font-weight: 800;
+  opacity: 0.05;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  letter-spacing: 20px;
+  pointer-events: none;
+  animation: floatText 12s ease-in-out infinite;
+  white-space: nowrap;
+}
+
+@keyframes floatText {
+  0%   { transform: translate(-50%, -50%) scale(0.45); }
+  50%  { transform: translate(-50%, -52%) scale(0.7); }
+  100% { transform: translate(-50%, -50%) scale(0.45); }
+}
+
+/* =========================
+   LEFT
+========================= */
+
+.left {
+  padding: clamp(40px, 5vw, 100px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.left h1 {
+  font-size: 56px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.left h1 span {
+  opacity: 0.6;
+}
+
+.left p {
+  max-width: 420px;
+  opacity: 0.65;
+  line-height: 1.6;
+}
+
+/* META */
+
+.meta {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.meta-item span {
+  display: block;
+  font-size: 10px;
+  opacity: 0.4;
+  letter-spacing: 2px;
+}
+
+/* =========================
+   RIGHT
+========================= */
+
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(30px, 4vw, 60px);
+}
+
+.form {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* INPUT SYSTEM */
+
+.field {
+  position: relative;
+}
+
+input, textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 14px 0;
+  font-size: 14px;
+  outline: none;
+  resize: none;
+}
+
+.line {
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+  transition: 0.4s ease;
+}
+
+.field:focus-within .line {
+  background: white;
+}
+
+/* STATES */
+
+small {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+button {
+  padding: 15px;
+  background: white;
+  color: black;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 11px;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+button.loading {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.success {
+  font-size: 12px;
+  color: #9dff9d;
+}
+
+.cooldown {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    padding: 40px 25px;
+  }
+
+  .right {
+    padding: 30px 20px;
+  }
+
+  .left h1 {
+    font-size: 36px;
+  }
+
+  .bg-text {
+    font-size: 28vw;
+  }
+}

@@ -1,0 +1,265 @@
+<section class="home">
+
+  <section class="container">
+
+    <section class="hero">
+
+      <!-- BACKGROUND -->
+      <div class="hero-bg">
+        <img src="assets/home/hero-bg.jpg" alt="">
+        <div class="hero-overlay"></div>
+        <div class="hero-noise"></div>
+      </div>
+
+      <!-- LIGHTS -->
+      <div class="light light-1"></div>
+      <div class="light light-2"></div>
+
+      <!-- PARTICLES -->
+      <div class="particle particle-1"></div>
+      <div class="particle particle-2"></div>
+      <div class="particle particle-3"></div>
+
+      <!-- CONTENT -->
+      <div class="hero-content">
+
+        <div class="ark-logo">
+
+          <div class="letter draggable letter-a">
+            <div class="letter-glow"></div>
+            <div class="letter-shadow"></div>
+            <div class="letter-core">
+              <img src="assets/home/a.png" alt="A">
+            </div>
+          </div>
+
+          <div class="letter draggable letter-r">
+            <div class="letter-glow"></div>
+            <div class="letter-shadow"></div>
+            <div class="letter-core">
+              <img src="assets/home/r.png" alt="R">
+            </div>
+          </div>
+
+          <div class="letter draggable letter-k">
+            <div class="letter-glow"></div>
+            <div class="letter-shadow"></div>
+            <div class="letter-core">
+              <img src="assets/home/k.png" alt="K">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="hero-text reveal">
+
+          <p class="subtitle">
+            Streetwear & Selected Brands
+          </p>
+
+          <h1>
+            Streetwear seleccionado para una comunidad en movimiento
+          </h1>
+
+          <h2>
+            Explora drops limitados, marcas globales y piezas que aparecen de forma puntual.
+          </h2>
+
+        </div>
+
+        <div class="hero-actions reveal">
+
+          <a routerLink="/products" class="btn primary">
+            <span>Ver colección</span>
+          </a>
+
+          <a routerLink="/about" class="btn secondary">
+            <span>Explorar ARK</span>
+          </a>
+
+        </div>
+
+        <div class="hero-stats reveal">
+
+          <div>
+            <strong>+120</strong>
+            <span>Productos</span>
+          </div>
+
+          <div>
+            <strong>Limited</strong>
+            <span>Drops activos</span>
+          </div>
+
+          <div>
+            <strong>Global</strong>
+            <span>Streetwear</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- FEATURED -->
+    <section class="featured reveal">
+      <div class="featured-container">
+
+        <div class="featured-header">
+          <h2>Drops exclusivos</h2>
+          <p>
+            Piezas activas disponibles durante tiempo limitado.<br>
+            Cada drop desaparece cuando finaliza su fecha o se agotan las unidades disponibles.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card" *ngFor="let drop of featuredDrops">
+            <div class="card-img">
+              <img [src]="drop.image" [alt]="drop.name" loading="lazy">
+            </div>
+
+            <div class="card-overlay">
+              <span>{{ drop.brand }}</span>
+              <p>{{ drop.name }}</p>
+            </div>
+
+            <p class="drop-date">{{ getRemainingDays(drop.endDate) }} días restantes</p>
+          </article>
+        </div>
+
+        <div class="featured-action">
+          <a routerLink="/drops" class="explore-btn">
+            Explorar drops
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BRANDS -->
+    <section class="brands reveal">
+      <div class="brands-container">
+
+        <div class="brands-header">
+          <h2>Firmas que definen la rotación actual.</h2>
+          <p>
+            Algunas de las selecciones de marcas globales con presencia en la cultura streetwear.
+          </p>
+        </div>
+
+        <div class="brand-strip">
+          <div class="brand-track">
+
+            <span class="brand-pill" *ngFor="let brand of brandLogos">
+              {{ brand }}
+            </span>
+
+            <span class="brand-pill" *ngFor="let brand of brandLogos">
+              {{ brand }}
+            </span>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process reveal">
+      <div class="process-container">
+
+        <div class="process-header">
+          <h2>
+            Un recorrido simple. <br>
+            Una experiencia cuidada.
+          </h2>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-card" *ngFor="let step of processSteps">
+            <span class="process-number">{{ step.number }}</span>
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.text }}</p>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <section class="testimonial reveal">
+      <div class="testimonial-container">
+
+        <div class="testimonial-quote">
+          <blockquote>
+            “ARK mezcla streetwear y comunidad de una forma diferente.”
+          </blockquote>
+
+          <p>
+            Una experiencia que combina selección curada, drops limitados y
+            contacto directo con una comunidad que sigue la cultura de cerca.
+          </p>
+        </div>
+
+        <div class="testimonial-side">
+          <div class="mini-stat" *ngFor="let fact of communityFacts">
+            <strong>{{ fact.value }}</strong>
+            <span>{{ fact.label }}</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BRAND -->
+    <section class="brand reveal">
+      <div class="brand-container">
+
+        <div class="brand-copy">
+          <h2>
+            Streetwear sin filtros.
+            Cultura sin límites.
+          </h2>
+
+          <p>
+            ARK es una plataforma de streetwear basada en drops exclusivos,
+            prendas seleccionadas y experiencias impulsadas por la comunidad.
+          </p>
+
+          <p>
+            Todo ocurre en movimiento:
+            lanzamientos, eventos, conexiones y nuevas colecciones.
+          </p>
+        </div>
+
+        <div class="brand-facts">
+          <div class="brand-fact" *ngFor="let fact of brandFacts">
+            <strong>{{ fact.value }}</strong>
+            <span>{{ fact.label }}</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- INSTAGRAM -->
+    <section class="instagram reveal">
+      <div class="instagram-box">
+
+        <span>Instagram</span>
+
+        <h2>Sigue el movimiento.</h2>
+
+        <p>Nuevos drops, previews, lanzamientos y eventos aparecen primero aquí.</p>
+
+        <a href="https://instagram.com/a.r.k.shop" target="_blank">
+          @a.r.k.shop
+        </a>
+
+      </div>
+    </section>
+
+  </section>
+</section>
