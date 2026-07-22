@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://ark-store-back.onrender.com'
+  apiUrl: 'https://ark-store-back.onrender.com/api'
 };
