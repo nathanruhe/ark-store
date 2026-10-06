@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 
 import { Drop } from '../../models/drop.model';
-import { DROPS } from '../../data/products/drops/drops';
+import { DropsService } from '../../services/drops.service';
 
 @Component({
   selector: 'app-drops',
@@ -17,119 +17,195 @@ export class DropsComponent implements OnInit, AfterViewInit {
 
   drops: Drop[] = [];
 
-  currentIndex: Record<number, number> = {};
+  currentIndex: Record<string, number> = {};
 
-  constructor(private el: ElementRef) {}
+  constructor(
+    private el: ElementRef,
+    private dropsService: DropsService
+  ) {}
+
 
   ngOnInit(): void {
 
-    this.drops = DROPS
-      .filter(drop => this.isDropVisible(drop))
-      .sort((a, b) => {
-        const endA = new Date(a.endDate).getTime();
-        const endB = new Date(b.endDate).getTime();
+    this.dropsService.getDrops().subscribe({
 
-        return endA - endB;
-      });
+      next: (drops) => {
 
-    for (const drop of this.drops) {
-      this.currentIndex[drop.id] = 0;
-    }
+        console.log('Drops recibidos:', drops);
+
+        this.drops = drops;
+
+        for (const drop of this.drops) {
+
+          this.currentIndex[drop.ref] = 0;
+
+        }
+
+        setTimeout(() => {
+
+          this.initReveal();
+
+        }, 0);
+
+      },
+
+      error: (error) => {
+
+        console.error(
+          'Error obteniendo drops:',
+          error
+        );
+
+        this.drops = [];
+
+      }
+
+    });
+
   }
+
 
   ngAfterViewInit(): void {
+
     this.initReveal();
+
   }
 
-  /* =========================
-     DROP VISIBILITY
-  ========================= */
-
-  private isDropVisible(drop: Drop): boolean {
-
-    if (!drop.active) {
-      return false;
-    }
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const endDate = new Date(drop.endDate);
-    endDate.setHours(0, 0, 0, 0);
-
-    return endDate >= today;
-  }
 
   /* =========================
      IMAGES
   ========================= */
 
   private getImages(drop: Drop): string[] {
+
     return drop.gallery?.length
-      ? [drop.image, ...drop.gallery]
-      : [drop.image];
+      ? drop.gallery
+      : [];
+
   }
+
 
   private ensureIndex(drop: Drop): void {
-    if (this.currentIndex[drop.id] === undefined) {
-      this.currentIndex[drop.id] = 0;
+
+    if (
+      this.currentIndex[drop.ref] === undefined
+    ) {
+
+      this.currentIndex[drop.ref] = 0;
+
     }
+
   }
+
 
   getCurrentImage(drop: Drop): string {
+
     this.ensureIndex(drop);
 
     const images = this.getImages(drop);
 
-    return images[this.currentIndex[drop.id]];
+    if (!images.length) {
+      return '';
+    }
+
+    return images[
+      this.currentIndex[drop.ref]
+    ];
+
   }
 
-  nextImage(drop: Drop, event?: Event): void {
+
+  nextImage(
+    drop: Drop,
+    event?: Event
+  ): void {
+
     event?.stopPropagation();
 
     this.ensureIndex(drop);
 
     const images = this.getImages(drop);
 
-    const current = this.currentIndex[drop.id];
+    if (images.length <= 1) {
+      return;
+    }
 
-    this.currentIndex[drop.id] =
+    const current =
+      this.currentIndex[drop.ref];
+
+    this.currentIndex[drop.ref] =
       (current + 1) % images.length;
+
   }
 
-  prevImage(drop: Drop, event?: Event): void {
+
+  prevImage(
+    drop: Drop,
+    event?: Event
+  ): void {
+
     event?.stopPropagation();
 
     this.ensureIndex(drop);
 
     const images = this.getImages(drop);
 
-    const current = this.currentIndex[drop.id];
+    if (images.length <= 1) {
+      return;
+    }
 
-    this.currentIndex[drop.id] =
-      (current - 1 + images.length) % images.length;
+    const current =
+      this.currentIndex[drop.ref];
+
+    this.currentIndex[drop.ref] =
+      (
+        current - 1 + images.length
+      ) % images.length;
+
   }
+
 
   /* =========================
      DAYS
   ========================= */
 
-  getRemainingDays(date: string): number {
+  getRemainingDays(
+    date: string
+  ): number {
 
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
 
-    const endDate = new Date(date);
-    endDate.setHours(0, 0, 0, 0);
-
-    const diff =
-      endDate.getTime() - today.getTime();
-
-    return Math.max(
-      Math.ceil(diff / (1000 * 60 * 60 * 24)),
+    today.setHours(
+      0,
+      0,
+      0,
       0
     );
+
+    const endDate =
+      new Date(date);
+
+    endDate.setHours(
+      0,
+      0,
+      0,
+      0
+    );
+
+    const diff =
+      endDate.getTime() -
+      today.getTime();
+
+    return Math.max(
+      Math.ceil(
+        diff /
+        (1000 * 60 * 60 * 24)
+      ),
+      0
+    );
+
   }
+
 
   /* =========================
      REVEAL
@@ -137,31 +213,48 @@ export class DropsComponent implements OnInit, AfterViewInit {
 
   private initReveal(): void {
 
-    const observer = new IntersectionObserver(
-      entries => {
+    const observer =
+      new IntersectionObserver(
 
-        entries.forEach(entry => {
+        entries => {
 
-          if (entry.isIntersecting) {
+          entries.forEach(entry => {
 
-            entry.target.classList.add('active');
+            if (entry.isIntersecting) {
 
-            observer.unobserve(entry.target);
-          }
+              entry.target.classList.add(
+                'active'
+              );
 
-        });
+              observer.unobserve(
+                entry.target
+              );
 
-      },
-      {
-        threshold: 0.1
-      }
-    );
+            }
+
+          });
+
+        },
+
+        {
+          threshold: 0.1
+        }
+
+      );
+
 
     const elements =
-      this.el.nativeElement.querySelectorAll('.reveal');
+      this.el.nativeElement
+        .querySelectorAll(
+          '.reveal'
+        );
 
-    elements.forEach((el: Element) =>
-      observer.observe(el)
+
+    elements.forEach(
+      (el: Element) =>
+        observer.observe(el)
     );
+
   }
+
 }

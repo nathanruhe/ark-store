@@ -1,12 +1,10 @@
 export interface Drop {
-  id: number;
+  ref: string;
   name: string;
   brand: string;
   description: string;
   price: number;
-  image: string;
-  gallery?: string[];
-  ref: string;
+  gallery: string[];
   endDate: string;
   active: boolean;
 }

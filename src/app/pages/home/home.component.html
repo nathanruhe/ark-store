@@ -109,7 +109,7 @@
         <div class="featured-header">
           <h2>Drops exclusivos</h2>
           <p>
-            Piezas activas disponibles durante tiempo limitado.<br>
+            Piezas disponibles durante tiempo limitado.<br>
             Cada drop desaparece cuando finaliza su fecha o se agotan las unidades disponibles.
           </p>
         </div>
@@ -117,7 +117,7 @@
         <div class="grid">
           <article class="card" *ngFor="let drop of featuredDrops">
             <div class="card-img">
-              <img [src]="drop.image" [alt]="drop.name" loading="lazy">
+              <img [src]="drop.gallery[0]" [alt]="drop.name" loading="lazy">
             </div>
 
             <div class="card-overlay">
@@ -145,7 +145,7 @@
         <div class="brands-header">
           <h2>Firmas que definen la rotación actual.</h2>
           <p>
-            Algunas de las selecciones de marcas globales con presencia en la cultura streetwear.
+            Algunas de las marcas globales con presencia en la cultura streetwear.
           </p>
         </div>
 

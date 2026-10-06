@@ -45,7 +45,7 @@
           <span>02</span>
           <h3>Contacto directo</h3>
           <p>
-            Los pedidos se gestionan manualmente a través de Instagram o WhatsApp. <br>
+            Los pedidos se gestionan a través de Instagram o WhatsApp. <br>
             No olvides apuntar la REF!
           </p>
         </div>
@@ -93,13 +93,17 @@
               [alt]="drop.name"
             >
 
-            <button class="nav left" (click)="prevImage(drop, $event)">
-              ‹
-            </button>
+            <button
+              *ngIf="drop.gallery.length > 1"
+              class="nav left"
+              (click)="prevImage(drop, $event)"
+            ></button>
 
-            <button class="nav right" (click)="nextImage(drop, $event)">
-              ›
-            </button>
+            <button
+              *ngIf="drop.gallery.length > 1"
+              class="nav right"
+              (click)="nextImage(drop, $event)"
+            ></button>
 
           </div>
 
@@ -111,7 +115,9 @@
                 {{ drop.brand }}
               </span>
 
-              <span class="ref">REF: {{ drop.ref }}</span>
+              <span class="ref">
+                REF: {{ drop.ref }}
+              </span>
 
             </div>
 
@@ -124,13 +130,19 @@
             <div class="bottom-row">
 
               <div class="prices">
+
                 <span class="price">
                   {{ drop.price }}€
                 </span>
+
               </div>
 
               <div class="remaining">
-                Finaliza en <span class="end">{{ getRemainingDays(drop.endDate) }}</span> días
+                Finaliza en
+                <span class="end">
+                  {{ getRemainingDays(drop.endDate) }}
+                </span>
+                días
               </div>
 
             </div>
