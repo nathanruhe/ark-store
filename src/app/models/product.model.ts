@@ -14,7 +14,9 @@ export type ProductCategory =
 export type AccessoryType =
   | 'bolsos'
   | 'gorros'
-  | 'relojes';
+  | 'relojes'
+  | 'joyeria'
+  | 'gafas';
 
 export interface Product {
   ref: string;
